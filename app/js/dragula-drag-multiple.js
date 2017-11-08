@@ -7,8 +7,8 @@
     var reset = function(elm) {
         $(elm)
             .removeAttr('style')
-            .removeClass('tg-backlog-us-mirror')
-            .removeClass('backlog-us-mirror')
+            .removeClass('tg-multiple-drag-mirror')
+            .removeClass('multiple-drag-mirror')
             .data('dragMultipleIndex', null)
             .data('dragMultipleActive', false);
     };
@@ -66,11 +66,11 @@
         dragMultiple.items = {};
 
         $('.' + mainClass).removeClass(mainClass);
-        $('.tg-backlog-us-mirror').remove();
-        $('.backlog-us-mirror').removeClass('backlog-us-mirror');
+        $('.tg-multiple-drag-mirror').remove();
+        $('.multiple-drag-mirror').removeClass('multiple-drag-mirror');
 
-        $('.tg-backlog-us-dragging')
-            .removeClass('tg-backlog-us-dragging')
+        $('.tg-multiple-drag-dragging')
+            .removeClass('tg-multiple-drag-dragging')
             .show();
 
         return $('.' + multipleSortableClass);
@@ -180,8 +180,8 @@
             clone = $(item).clone(true);
 
             clone
-                .addClass('backlog-us-mirror')
-                .addClass('tg-backlog-us-mirror')
+                .addClass('multiple-drag-mirror')
+                .addClass('tg-multiple-drag-mirror')
                 .data('dragmultiple:originalPosition', $(item).position())
                 .data('dragMultipleActive', true)
                 .css({
@@ -194,7 +194,7 @@
 
             $(item)
                 .hide()
-                .addClass('tg-backlog-us-dragging');
+                .addClass('tg-multiple-drag-dragging');
 
             return clone;
         });

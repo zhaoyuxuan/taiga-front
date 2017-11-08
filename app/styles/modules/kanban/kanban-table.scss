@@ -148,6 +148,10 @@ $column-padding: .5rem 1rem;
     .kanban-uses-box {
         background: $mass-white;
     }
+    .kanban-task-selected {
+        border: 2px solid $primary;
+        border-radius: 2px;
+    }
 }
 
 .kanban-table-inner {

@@ -69,8 +69,9 @@ KanbanSortableDirective = ($repo, $rs, $rootscope) ->
                     return $(item).is('tg-card')
             })
 
-            drake.on 'drag', (item) ->
+            drake.on 'drag', (item, container) ->
                 oldParentScope = $(item).parent().scope()
+                window.dragMultiple.start(item, container)
 
             drake.on 'dragend', (item) ->
                 parentEl = $(item).parent()

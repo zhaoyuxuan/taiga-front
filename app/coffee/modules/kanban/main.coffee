@@ -71,6 +71,7 @@ class KanbanController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fi
         bindMethods(@)
         @kanbanUserstoriesService.reset()
         @.openFilter = false
+        @.selectedUss = {}
 
         return if @.applyStoredFilters(@params.pslug, "kanban-filters")
 
@@ -79,6 +80,10 @@ class KanbanController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fi
 
         taiga.defineImmutableProperty @.scope, "usByStatus", () =>
             return @kanbanUserstoriesService.usByStatus
+
+    toggleSelectedUs: (usId) ->
+        console.log(usId)
+        @.selectedUss[usId] = !@.selectedUss[usId]
 
     firstLoad: () ->
         promise = @.loadInitialData()
