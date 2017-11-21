@@ -48,7 +48,6 @@ KanbanSortableDirective = ($repo, $rs, $rootscope) ->
             if not ($scope.project.my_permissions.indexOf("modify_us") > -1)
                 return
 
-            oldParentScope = null
             newParentScope = null
             itemEl = null
             tdom = $el
@@ -69,25 +68,27 @@ KanbanSortableDirective = ($repo, $rs, $rootscope) ->
                     return $(item).is('tg-card')
             })
 
-            drake.on 'drag', (item, container) ->
-                oldParentScope = $(item).parent().scope()
-                window.dragMultiple.start(item, container)
+            drake.on 'drag', (item) ->
+                window.dragMultiple.start(item, containers)
+
+            drake.on 'cloned', (item, dropTarget) ->
+                $(item).addClass('multiple-drag-mirror')
 
             drake.on 'dragend', (item) ->
                 parentEl = $(item).parent()
-                itemEl = $(item)
-                itemUs = itemEl.scope().us
-                itemIndex = itemEl.index()
                 newParentScope = parentEl.scope()
 
                 newStatusId = newParentScope.s.id
-                oldStatusId = oldParentScope.s.id
-
-                if newStatusId != oldStatusId
-                    deleteElement(itemEl)
+                dragMultipleItems = window.dragMultiple.stop()
 
                 $scope.$apply ->
-                    $rootscope.$broadcast("kanban:us:move", itemUs, itemUs.getIn(['model', 'status']), newStatusId, itemIndex)
+                    for item in dragMultipleItems
+                        itemEl = $(item)
+                        itemUs = itemEl.scope().us
+                        itemIndex = itemEl.index()
+                        deleteElement(itemEl)
+
+                        $rootscope.$broadcast("kanban:us:move", itemUs, itemUs.getIn(['model', 'status']), newStatusId, itemIndex)
 
             scroll = autoScroll(containers, {
                 margin: 100,

@@ -149,12 +149,31 @@ $column-padding: .5rem 1rem;
         background: $mass-white;
     }
     .kanban-task-selected {
-        border: 2px solid $primary;
-        border-radius: 2px;
+        &.card {
+            box-shadow: 2px 2px 4px $primary;
+        }
     }
 }
 
 .kanban-table-inner {
     display: flex;
     flex-wrap: nowrap;
+}
+
+.card.gu-transit .card-inner {
+    display: none;
+}
+.card-transit-multi {
+    background: $white;
+    display: none;
+    opacity: 1;
+    padding: 10px;
+    hr {
+        background-color: $gray;
+        border: 0;
+        height: 3px;
+    }
+}
+.card.gu-transit .card-transit-multi {
+    display: block;
 }

@@ -81,8 +81,10 @@ class KanbanController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fi
         taiga.defineImmutableProperty @.scope, "usByStatus", () =>
             return @kanbanUserstoriesService.usByStatus
 
+    cleanSelectedUss: () ->
+        @.selectedUss = {}
+
     toggleSelectedUs: (usId) ->
-        console.log(usId)
         @.selectedUss[usId] = !@.selectedUss[usId]
 
     firstLoad: () ->
@@ -299,6 +301,7 @@ class KanbanController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fi
     moveUs: (ctx, us, oldStatusId, newStatusId, index) ->
         us = @kanbanUserstoriesService.getUsModel(us.get('id'))
         newStatus = @scope.usStatusById[newStatusId]
+        @.cleanSelectedUss()
         if newStatus.is_archived and !@scope.usByStatus.get(newStatusId.toString())
             moveUpdateData = @kanbanUserstoriesService.moveToEnd(us.id, newStatusId)
         else
