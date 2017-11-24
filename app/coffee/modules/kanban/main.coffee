@@ -82,7 +82,8 @@ class KanbanController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fi
             return @kanbanUserstoriesService.usByStatus
 
     cleanSelectedUss: () ->
-        @.selectedUss = {}
+        for key of @.selectedUss
+            @.selectedUss[key] = false
 
     toggleSelectedUs: (usId) ->
         @.selectedUss[usId] = !@.selectedUss[usId]
@@ -302,6 +303,7 @@ class KanbanController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fi
         us = @kanbanUserstoriesService.getUsModel(us.get('id'))
         newStatus = @scope.usStatusById[newStatusId]
         @.cleanSelectedUss()
+
         if newStatus.is_archived and !@scope.usByStatus.get(newStatusId.toString())
             moveUpdateData = @kanbanUserstoriesService.moveToEnd(us.id, newStatusId)
         else

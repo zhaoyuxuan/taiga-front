@@ -40,6 +40,8 @@
         var currentTop = shadow.position().top;
         var height = shadow.outerHeight();
 
+        $('.gu-transit').addClass('gu-transit-multi');
+
         _.forEach(dragMultiple.items.draggingItems, function(elm, index) {
             var elmIndex = parseInt(elm.data('dragMultipleIndex'), 10);
             var top = currentTop + (elmIndex * height);
@@ -72,6 +74,8 @@
         $('.tg-multiple-drag-dragging')
             .removeClass('tg-multiple-drag-dragging')
             .show();
+
+        $('.gu-transit-multi').removeClass('.gu-transit-multi');
 
         return $('.' + multipleSortableClass);
     };

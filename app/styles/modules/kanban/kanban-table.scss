@@ -160,20 +160,26 @@ $column-padding: .5rem 1rem;
     flex-wrap: nowrap;
 }
 
-.card.gu-transit .card-inner {
-    display: none;
-}
 .card-transit-multi {
     background: $white;
     display: none;
     opacity: 1;
     padding: 10px;
-    hr {
-        background-color: $gray;
+    div {
+        background: $gray;
         border: 0;
-        height: 3px;
+        display: block;
+        height: 10px;
+        margin: 15px 0;
+        width: 100%;
     }
 }
-.card.gu-transit .card-transit-multi {
-    display: block;
+
+.card.gu-transit-multi {
+    .card-transit-multi {
+        display: block;
+    }
+    .card-inner {
+        display: none;
+    }
 }
