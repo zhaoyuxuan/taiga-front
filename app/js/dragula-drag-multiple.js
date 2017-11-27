@@ -75,7 +75,7 @@
             .removeClass('tg-multiple-drag-dragging')
             .show();
 
-        $('.gu-transit-multi').removeClass('.gu-transit-multi');
+        $('.gu-transit-multi').removeClass('gu-transit-multi');
 
         return $('.' + multipleSortableClass);
     };
