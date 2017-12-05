@@ -98,33 +98,35 @@ class KanbanUserstoriesService extends taiga.Service
 
         usByStatus = _.filter @.userstoriesRaw, (it) =>
             return it.status == statusId
+        console.log(usByStatus)
 
         usByStatus = _.sortBy usByStatus, (it) => @.order[it.id]
 
-        usByStatusWithoutMoved = _.filter usByStatus, (it) => it.id != id
-        beforeDestination = _.slice(usByStatusWithoutMoved, 0, index)
-        afterDestination = _.slice(usByStatusWithoutMoved, index)
+        if us.status != statusId
+            usByStatusWithoutMoved = _.filter usByStatus, (it) => it.id != id
+            beforeDestination = _.slice(usByStatusWithoutMoved, 0, index)
+            afterDestination = _.slice(usByStatusWithoutMoved, index)
 
-        setOrders = {}
+            setOrders = {}
 
-        previous = beforeDestination[beforeDestination.length - 1]
+            previous = beforeDestination[beforeDestination.length - 1]
 
-        previousWithTheSameOrder = _.filter beforeDestination, (it) =>
-            @.order[it.id] == @.order[previous.id]
+            previousWithTheSameOrder = _.filter beforeDestination, (it) =>
+                @.order[it.id] == @.order[previous.id]
 
-        if previousWithTheSameOrder.length > 1
-            for it in previousWithTheSameOrder
-                setOrders[it.id] = @.order[it.id]
+            if previousWithTheSameOrder.length > 1
+                for it in previousWithTheSameOrder
+                    setOrders[it.id] = @.order[it.id]
 
-        if !previous and (!afterDestination or afterDestination.length == 0)
-            @.order[us.id] = 0
-        else if !previous and afterDestination and afterDestination.length > 0
-            @.order[us.id] = @.order[afterDestination[0].id] - 1
-        else if previous
-            @.order[us.id] = @.order[previous.id] + 1
+            if !previous and (!afterDestination or afterDestination.length == 0)
+                @.order[us.id] = 0
+            else if !previous and afterDestination and afterDestination.length > 0
+                @.order[us.id] = @.order[afterDestination[0].id] - 1
+            else if previous
+                @.order[us.id] = @.order[previous.id] + 1
 
-        for it, key in afterDestination
-            @.order[it.id] = @.order[us.id] + key + 1
+            for it, key in afterDestination
+                @.order[it.id] = @.order[us.id] + key + 1
 
         us.status = statusId
         us.kanban_order = @.order[us.id]

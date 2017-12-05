@@ -86,7 +86,7 @@ KanbanSortableDirective = ($repo, $rs, $rootscope) ->
                         itemEl = $(item)
                         itemUs = itemEl.scope().us
                         itemIndex = itemEl.index()
-                        deleteElement(itemEl)
+                        #deleteElement(itemEl)
 
                         $rootscope.$broadcast("kanban:us:move", itemUs, itemUs.getIn(['model', 'status']), newStatusId, itemIndex)
 

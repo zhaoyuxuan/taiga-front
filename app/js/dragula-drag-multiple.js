@@ -59,9 +59,6 @@
 
         refreshOriginal();
 
-        var current = dragMultiple.items.elm;
-        var container = dragMultiple.items.container;
-
         document.documentElement.removeEventListener('mousemove', removeEventFn);
 
         // reset
