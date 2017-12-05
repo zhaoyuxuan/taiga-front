@@ -17,12 +17,13 @@
 # File: navigation-bar.directive.coffee
 ###
 
-NavigationBarDirective = (currentUserService, navigationBarService, locationService, navUrlsService, config) ->
+NavigationBarDirective = (currentUserService, navigationBarService, locationService, navUrlsService, config, rootScope) ->
     link = (scope, el, attrs, ctrl) ->
         scope.vm = {}
 
         taiga.defineImmutableProperty(scope.vm, "projects", () -> currentUserService.projects.get("recents"))
         taiga.defineImmutableProperty(scope.vm, "isAuthenticated", () -> currentUserService.isAuthenticated())
+        taiga.defineImmutableProperty(scope.vm, "user", () -> currentUserService.getUser())
         taiga.defineImmutableProperty(scope.vm, "isEnabledHeader", () -> navigationBarService.isEnabledHeader())
 
         scope.vm.publicRegisterEnabled = config.get("publicRegisterEnabled")
@@ -32,6 +33,8 @@ NavigationBarDirective = (currentUserService, navigationBarService, locationServ
             nextUrl = encodeURIComponent(locationService.url())
             locationService.url(navUrlsService.resolve("login"))
             locationService.search({next: nextUrl})
+
+        scope.vm.userSettingsPlugins = _.filter(rootScope.userSettingsPlugins, {headerMenu: true})
 
         scope.$on "$routeChangeSuccess", () ->
             if locationService.path() == "/"
@@ -53,6 +56,7 @@ NavigationBarDirective.$inject = [
     "$tgLocation",
     "$tgNavUrls",
     "$tgConfig"
+    "$rootScope"
 ]
 
 angular.module("taigaNavigationBar").directive("tgNavigationBar", NavigationBarDirective)

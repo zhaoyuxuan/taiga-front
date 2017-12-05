@@ -23,6 +23,14 @@ nav.navbar(ng-if="vm.isEnabledHeader")
         )
 
     div.nav-right(ng-if="!vm.isAuthenticated")
+        a.plugin(
+            ng-repeat="plugin in vm.userSettingsPlugins"
+            ng-if="!plugin.authenticated"
+            href=""
+            tg-nav="user-settings-contrib:plugin=plugin.slug"
+            class="{{plugin.slug}}"
+        )
+            span.title(ng-bind-html="plugin.headerHtml(vm.user)")
         a.login(
             ng-click="vm.login()"
             href="#",
@@ -53,4 +61,14 @@ nav.navbar(ng-if="vm.isEnabledHeader")
             tg-svg(svg-icon="icon-discover")
 
         div.topnav-dropdown-wrapper(ng-show="vm.projects.size", tg-dropdown-project-list)
+
+        a.plugin(
+            ng-repeat="plugin in vm.userSettingsPlugins"
+            ng-if="plugin.authenticated"
+            href=""
+            tg-nav="user-settings-contrib:plugin=plugin.slug"
+            class="{{plugin.slug}}"
+        )
+            span.title(ng-bind-html="plugin.headerHtml(vm.user)")
+
         div.topnav-dropdown-wrapper(tg-dropdown-user)
