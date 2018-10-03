@@ -70,6 +70,21 @@ Resource = (urlsService, http, config, $rootScope, $q, storage) ->
             return defered.promise
 
         maxFileSize = config.get("maxUploadFileSize", null)
+        allow_type = config.get("allowAttachmentType", null)
+
+        file_extension = file.name.split(".")[1]
+
+
+        if allow_type and allow_type.length > 0 and !(file_extension in allow_type)
+           response = {
+               status: 413,
+               data: _error_message: "'#{file_extension}' type is not supported"
+           }
+           defered.reject(response)
+           return defered.promise
+
+
+
 
         if maxFileSize and file.size > maxFileSize
             response = {
