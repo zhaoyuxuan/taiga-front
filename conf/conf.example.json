@@ -16,6 +16,7 @@
     "termsOfServiceUrl": null,
     "GDPRUrl": null,
     "maxUploadFileSize": null,
+    "allowAttachmentType":[],
     "contribPlugins": [],
     "tribeHost": null,
     "importers": [],
