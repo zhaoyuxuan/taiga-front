@@ -53,6 +53,7 @@ class TaskboardIssuesService extends taiga.Service
                 return
 
     set: (issues) ->
+
         @.issuesRaw = issues
         @.refresh()
 
@@ -84,8 +85,9 @@ class TaskboardIssuesService extends taiga.Service
             issue.assigned_to = @.usersById[issueModel.assigned_to]
             issue.colorized_tags = _.map issue.model.tags, (tag) ->
                 return {name: tag[0], color: tag[1]}
+            if !issueModel.status_extra_info.is_closed
+                issues.push(issue)
 
-            issues.push(issue)
 
         @.milestoneIssues = Immutable.fromJS(issues)
 

@@ -84,6 +84,8 @@ class TaskboardController extends mixOf(taiga.Controller, taiga.PageMixin, taiga
     firstLoad: () ->
         promise = @.loadInitialData()
 
+
+
         # On Success
         promise.then => @._setMeta()
         # On Error
@@ -389,7 +391,6 @@ class TaskboardController extends mixOf(taiga.Controller, taiga.PageMixin, taiga
             @scope.$emit('project:loaded', project)
 
             @.fillUsersAndRoles(project.members, project.roles)
-
             return project
 
     loadSprintStats: ->
