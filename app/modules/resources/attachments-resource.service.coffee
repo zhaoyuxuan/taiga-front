@@ -72,7 +72,7 @@ Resource = (urlsService, http, config, $rootScope, $q, storage) ->
         maxFileSize = config.get("maxUploadFileSize", null)
         allow_type = config.get("allowAttachmentType", null)
 
-        file_extension = file.name.split(".")[1]
+        file_extension = file.name.split(".")[1].toLowerCase()
 
 
         if allow_type and allow_type.length > 0 and !(file_extension in allow_type)
